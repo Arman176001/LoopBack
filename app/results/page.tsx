@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Saira_Stencil_One } from 'next/font/google';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Line,
@@ -36,7 +37,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Navbar from "@/components/Navbar";
-
+const saira = Saira_Stencil_One({ weight: "400", subsets: ["latin"] });
 const COLORS = [
   "#FF6B6B",
   "#4ECDC4",
@@ -61,6 +62,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  
 
   useEffect(() => {
     if (!videoId) return;
@@ -180,8 +182,8 @@ export default function Page() {
     <div className="overflow-x-clip">
       <Navbar />
       <div className="container mx-auto p-4 space-y-8">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          Video Analysis Results
+        <h1 className="text-5xl font-bold text-center mb-8 ">
+          <span className={saira.className}>Video Analysis Results</span>
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Video Player */}

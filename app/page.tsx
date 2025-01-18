@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer'
 import Home from '@/components/home'
 import Navbar from '@/components/Navbar'
 import React from 'react'
@@ -9,6 +10,7 @@ const page = () => {
         <Navbar/>
       </nav>
       <Home />
+      <Footer/>
     </div>
   )
 }

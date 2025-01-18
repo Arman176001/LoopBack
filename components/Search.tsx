@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { SearchIcon } from 'lucide-react'
 import { Card } from '@/components/ui/card'
+import { Saira_Stencil_One } from 'next/font/google';
 
 interface Result {
   id: { kind: string; channelId: string };
@@ -11,7 +12,7 @@ interface Result {
     thumbnails: { default: { url: string } };
   };
 }
-
+const saira = Saira_Stencil_One({ weight: "400", subsets: ["latin"] })
 const Search = () => {
   const [inputValue, setInputValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
@@ -35,8 +36,8 @@ const Search = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl">
-      <h1 className="mb-8 text-4xl font-bold text-center text-gray-800">
-        Find Your Channel
+      <h1 className="mb-8 text-5xl font-bold text-center text-gray-800">
+        <span className={saira.className}>Find Your Channel</span>
       </h1>
       <div className="max-w-2xl mx-auto mb-12">
         <div className="relative">

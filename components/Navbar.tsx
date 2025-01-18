@@ -52,9 +52,6 @@ const Navbar = () => {
               <Link href="/about">About</Link>
             </li>
             <li className="cursor-pointer text-black hover:scale-125 font-bold transition-all duration-200">
-              <Link href="/services">Services</Link>
-            </li>
-            <li className="cursor-pointer text-black hover:scale-125 font-bold transition-all duration-200">
               <Link href="/contact">Contact</Link>
             </li>
           </ul>

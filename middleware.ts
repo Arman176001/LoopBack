@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 
 const publicRoutes = ['/', '/about', '/contact']
-const privateRoutes = ['/result', '/select', '/videos'] // Add private routes here
+const privateRoutes = ['/result', '/select', '/videos','/api'] // Add private routes here
 
 export async function middleware(request: NextRequest) {
   // Retrieve the session
@@ -39,5 +39,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/:path*',
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }
