@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, MouseEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Saira_Stencil_One } from 'next/font/google';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +36,9 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
+
 const saira = Saira_Stencil_One({ weight: "400", subsets: ["latin"] });
+
 const COLORS = [
   "#FF6B6B",
   "#4ECDC4",
@@ -51,6 +53,74 @@ const COLORS = [
   "#FFF176",
   "#FFB74D",
 ];
+
+// Define a type for the renderActiveShape props
+interface ActiveShapeProps {
+  cx: number;
+  cy: number;
+  innerRadius: number;
+  outerRadius: number;
+  startAngle: number;
+  endAngle: number;
+  fill: string;
+  payload: {
+    name: string;
+  };
+  percent: number;
+  value: number;
+}
+
+// Custom active shape for pie chart with hover details
+const renderActiveShape = (props: ActiveShapeProps) => {
+  const {
+    cx,
+    cy,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+    value,
+  } = props;
+
+  return (
+    <g>
+      <text
+        x={cx}
+        y={cy}
+        dy={-4}
+        textAnchor="middle"
+        fill={fill}
+        className="text-lg font-semibold"
+      >
+        {payload.name}
+      </text>
+      <text x={cx} y={cy} dy={20} textAnchor="middle" fill={fill}>
+        {`${value} comments (${(percent * 100).toFixed(2)}%)`}
+      </text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+    </g>
+  );
+};
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -282,7 +352,7 @@ export default function Page() {
                     <PieChart>
                       <Pie
                         activeIndex={activeIndex}
-                        activeShape={renderActiveShape}
+                        activeShape={(props: unknown) => renderActiveShape(props as ActiveShapeProps)}
                         data={pieData}
                         innerRadius={90}
                         outerRadius={140}
@@ -372,55 +442,3 @@ export default function Page() {
     </div>
   );
 }
-
-// Custom active shape for pie chart with hover details
-const renderActiveShape = (props: any) => {
-  const {
-    cx,
-    cy,
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-    fill,
-    payload,
-    percent,
-    value,
-  } = props;
-
-  return (
-    <g>
-      <text
-        x={cx}
-        y={cy}
-        dy={-4}
-        textAnchor="middle"
-        fill={fill}
-        className="text-lg font-semibold"
-      >
-        {payload.name}
-      </text>
-      <text x={cx} y={cy} dy={20} textAnchor="middle" fill={fill}>
-        {`${value} comments (${(percent * 100).toFixed(2)}%)`}
-      </text>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      />
-    </g>
-  );
-};

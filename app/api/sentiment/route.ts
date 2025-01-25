@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const apiUrl = new URL('http://127.0.0.1:5000/sentiment')
+    const apiUrl = new URL('https://youtubevideocommentsinsights.onrender.com/sentiment')
     apiUrl.searchParams.append('videoId', videoId)
 
     const response = await fetch(apiUrl.toString())
