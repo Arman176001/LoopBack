@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, MouseEvent } from "react";
+import React, { Suspense, useEffect, useState, MouseEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Saira_Stencil_One } from 'next/font/google';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,7 +54,6 @@ const COLORS = [
   "#FFB74D",
 ];
 
-// Define a type for the renderActiveShape props
 interface ActiveShapeProps {
   cx: number;
   cy: number;
@@ -70,7 +69,16 @@ interface ActiveShapeProps {
   value: number;
 }
 
-// Custom active shape for pie chart with hover details
+interface TimelineData {
+  timestamp: string;
+  count: number;
+}
+
+interface PieChartData {
+  name: string;
+  value: number;
+}
+
 const renderActiveShape = (props: ActiveShapeProps) => {
   const {
     cx,
@@ -122,7 +130,7 @@ const renderActiveShape = (props: ActiveShapeProps) => {
   );
 };
 
-export default function Page() {
+function ResultsContent() {
   const searchParams = useSearchParams();
   const videoId = searchParams?.get("videoId");
   const [analysis, setAnalysis] = useState<AnalysisResponse | null>(null);
@@ -131,7 +139,6 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
-  
 
   useEffect(() => {
     if (!videoId) return;
@@ -157,7 +164,7 @@ export default function Page() {
     fetchData();
   }, [videoId]);
 
-  const pieData = sentiment?.result
+  const pieData: PieChartData[] = sentiment?.result
     ? Object.entries(sentiment.result)
         .map(([key, value]) => ({
           name: key,
@@ -187,7 +194,7 @@ export default function Page() {
         }, {})
     : {};
 
-  const timelineArray = Object.entries(timelineData).map(
+  const timelineArray: TimelineData[] = Object.entries(timelineData).map(
     ([seconds, count]) => ({
       timestamp: `${Math.floor(Number(seconds) / 60)}:${(Number(seconds) % 60)
         .toString()
@@ -203,36 +210,34 @@ export default function Page() {
   });
 
   const formatAnalysisText = (text: string | undefined) => {
-    if (!text) return ""; // Handle empty input
+    if (!text) return ""; 
 
-    const lines = text.split("\n"); // Split the text into lines
+    const lines = text.split("\n");
     let formattedText = "";
-    let inList = false; // Track if we are inside a bullet list
+    let inList = false;
 
     lines.forEach((line) => {
       if (line.startsWith("-") || line.startsWith("•")) {
-        // If line starts with bullet point
         if (!inList) {
-          formattedText += "<ul>"; // Start the list
+          formattedText += "<ul>"; 
           inList = true;
         }
-        formattedText += `<li>${line.slice(1).trim()}</li>`; // Add list item
+        formattedText += `<li>${line.slice(1).trim()}</li>`; 
       } else {
         if (inList) {
-          formattedText += "</ul>"; // Close the list
+          formattedText += "</ul>"; 
           inList = false;
         }
         if (line.startsWith("**") && line.endsWith("**")) {
-          // Bold lines wrapped in **
           formattedText += `<b>${line.slice(2, -2)}</b>`;
         } else {
-          formattedText += `<p>${line}</p>`; // Normal paragraph with line break
+          formattedText += `<p>${line}</p>`; 
         }
       }
     });
 
     if (inList) {
-      formattedText += "</ul>"; // Close the list if still open
+      formattedText += "</ul>"; 
     }
 
     return formattedText;
@@ -255,7 +260,6 @@ export default function Page() {
           <span className={saira.className}>Video Analysis Results</span>
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Video Player */}
           <Card className="col-span-1 md:col-span-2 shadow-lg flex flex-col md:flex-row">
             <div className="w-full md:w-[70%] aspect-video p-4">
               {isLoading ? (
@@ -299,7 +303,6 @@ export default function Page() {
             </div>
           </Card>
 
-          {/* Timeline Graph */}
           <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="text-xl font-semibold">
@@ -336,7 +339,6 @@ export default function Page() {
             </CardContent>
           </Card>
 
-          {/* Sentiment Pie Chart */}
           <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="text-xl font-semibold">
@@ -352,7 +354,7 @@ export default function Page() {
                     <PieChart>
                       <Pie
                         activeIndex={activeIndex}
-                        activeShape={(props: unknown) => renderActiveShape(props as ActiveShapeProps)}
+                        activeShape={(props: any) => renderActiveShape(props)}
                         data={pieData}
                         innerRadius={90}
                         outerRadius={140}
@@ -374,7 +376,6 @@ export default function Page() {
             </CardContent>
           </Card>
 
-          {/* AI Summary */}
           <Card className="col-span-1 md:col-span-2 shadow-lg">
             <CardHeader>
               <CardTitle className="text-xl font-semibold">
