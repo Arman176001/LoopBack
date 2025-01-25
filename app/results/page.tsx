@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useState, MouseEvent } from "react";
+import React, {useEffect, useState, MouseEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Saira_Stencil_One } from 'next/font/google';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -243,7 +243,7 @@ function ResultsContent() {
     return formattedText;
   };
 
-  const onPieEnter = (_: MouseEvent, index: number) => {
+  const onPieEnter = (props: { payload: { name: string } }, index: number) => {
     setActiveIndex(index);
   };
 
@@ -251,6 +251,7 @@ function ResultsContent() {
     setSelectedEmotion(data.name);
     setIsDialogOpen(true);
   };
+  
 
   return (
     <div className="overflow-x-clip">
@@ -443,3 +444,5 @@ function ResultsContent() {
     </div>
   );
 }
+
+export default ResultsContent;
