@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, Suspense} from "react";
 import { useSearchParams } from "next/navigation";
 import { Saira_Stencil_One } from 'next/font/google';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -447,4 +447,16 @@ function ResultsContent() {
   );
 }
 
-export default ResultsContent;
+// Create a loading component
+function Loading() {
+  return <div className="text-center p-4">Loading...</div>;
+}
+
+// Create the main page component
+export default function Page() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ResultsContent />
+    </Suspense>
+  );
+}
