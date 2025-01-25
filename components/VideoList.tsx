@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useCallback, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -33,7 +33,7 @@ interface YouTubeApiResponse {
   nextPageToken?: string
 }
 
-const VideoList = () => {
+const VideoListContent = () => {
   const searchParams = useSearchParams() || new URLSearchParams()
   const channelId = searchParams.get('channelId')
   const [videos, setVideos] = useState<Video[]>([])
@@ -166,6 +166,29 @@ const VideoList = () => {
         </div>
       )}
     </div>
+  )
+}
+
+const VideoList = () => {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Card key={index} className="flex flex-col overflow-hidden h-full">
+              <Skeleton className="w-full h-48" />
+              <div className="p-4 flex-1 flex flex-col">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    }>
+      <VideoListContent />
+    </Suspense>
   )
 }
 
