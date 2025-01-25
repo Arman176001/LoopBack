@@ -355,6 +355,7 @@ function ResultsContent() {
                     <PieChart>
                       <Pie
                         activeIndex={activeIndex}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         activeShape={(props: any) => renderActiveShape(props)}
                         data={pieData}
                         innerRadius={90}
@@ -364,6 +365,7 @@ function ResultsContent() {
                         onClick={handlePieClick}
                       >
                         {pieData.map((entry, index) => (
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           <Cell
                             key={`cell-${index}`}
                             fill={COLORS[index % COLORS.length]}
