@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useState, MouseEvent } from "react";
+import React, {useEffect, useState} from "react";
 import { useSearchParams } from "next/navigation";
 import { Saira_Stencil_One } from 'next/font/google';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -193,7 +193,7 @@ function ResultsContent() {
           return acc;
         }, {})
     : {};
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const timelineArray: TimelineData[] = Object.entries(timelineData).map(
     ([seconds, count]) => ({
       timestamp: `${Math.floor(Number(seconds) / 60)}:${(Number(seconds) % 60)
@@ -202,13 +202,13 @@ function ResultsContent() {
       count,
     })
   );
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const timelineDataSorted = timelineArray.sort((a, b) => {
     const [aMin, aSec] = a.timestamp.split(":").map(Number);
     const [bMin, bSec] = b.timestamp.split(":").map(Number);
     return aMin * 60 + aSec - (bMin * 60 + bSec);
   });
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const formatAnalysisText = (text: string | undefined) => {
     if (!text) return ""; 
 
@@ -242,11 +242,11 @@ function ResultsContent() {
 
     return formattedText;
   };
-
-  const onPieEnter = (props: { payload: { name: string } }, index: number) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPieEnter = (_props: { payload: { name: string } }, index: number) => {
     setActiveIndex(index);
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handlePieClick = (data: { name: string }) => {
     setSelectedEmotion(data.name);
     setIsDialogOpen(true);
