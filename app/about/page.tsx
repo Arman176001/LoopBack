@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar';
+import Link from 'next/link';
 import React from 'react';
 
 const About: React.FC = () => {
@@ -34,11 +35,11 @@ const About: React.FC = () => {
         <div className="text-center mt-8">
           <h2 className="text-xl font-semibold text-gray-800">Get Started Today!</h2>
           <p className="text-gray-600 mt-2">Sign up now and take the first step towards smarter decision-making with YouTube analytics.</p>
-          <a href='/'>
+          <Link href='/'>
           <button className="mt-4 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300">
             Explore Loopback
           </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

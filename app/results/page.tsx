@@ -18,7 +18,6 @@ import {
 } from "recharts";
 import {
   ChartContainer,
-  ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +25,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type {
   AnalysisResponse,
   SentimentResponse,
-  CommentTimestamp,
 } from "../types/analysis";
 import {
   Dialog,
@@ -37,6 +35,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 const saira = Saira_Stencil_One({ weight: "400", subsets: ["latin"] });
 const COLORS = [
   "#FF6B6B",
@@ -169,11 +168,11 @@ export default function Page() {
     return formattedText;
   };
 
-  const onPieEnter = (_: any, index: number) => {
+  const onPieEnter = (_: MouseEvent, index: number) => {
     setActiveIndex(index);
   };
 
-  const handlePieClick = (data: any) => {
+  const handlePieClick = (data: { name: string }) => {
     setSelectedEmotion(data.name);
     setIsDialogOpen(true);
   };
@@ -214,7 +213,9 @@ export default function Page() {
                     </p>
                     <div className="mt-8">
                       <a href="https://buymeacoffee.com/arman176">
-                        <img
+                        <Image
+                          width={200}
+                          height={64}
                           className="mx-auto h-16 hover:scale-110 transition-transform ease-in duration-150"
                           src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
                           alt="Buy Me a Coffee"

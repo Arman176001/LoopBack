@@ -2,15 +2,15 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-import { useToast } from "@/hooks/use-toast"
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,15 +35,18 @@ const Contact: React.FC = () => {
         title: "Message sent!",
         description: "We'll get back to you soon.",
         duration: 5000,
-      })
+      });
       setFormData({ name: '', email: '', message: '' });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Something went wrong.';
+
       toast({
         title: "Error",
-        description: error.message || 'Something went wrong.',
+        description: errorMessage,
         variant: "destructive",
         duration: 5000,
-      })
+      });
     } finally {
       setLoading(false);
     }
@@ -51,7 +54,7 @@ const Contact: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -116,7 +119,7 @@ const Contact: React.FC = () => {
               className="w-full"
             />
           </motion.div>
-          <motion.div 
+          <motion.div
             className="text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -137,4 +140,3 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
-

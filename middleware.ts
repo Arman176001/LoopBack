@@ -21,13 +21,6 @@ export async function middleware(request: NextRequest) {
   const isPrivateRoute = privateRoutes.some(route =>
     request.nextUrl.pathname.startsWith(route)
   )
-
-  // Debug logs
-  console.log('Session:', session)
-  console.log('Is Authenticated:', isAuthed)
-  console.log('Is Public Route:', isPublicRoute)
-  console.log('Is Private Route:', isPrivateRoute)
-
   // Redirect to the homepage if the user is not authenticated and trying to access a private route
   if (!isAuthed && isPrivateRoute) {
     const url = new URL('/', request.url) // Create a URL relative to the request
