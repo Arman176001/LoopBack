@@ -1,9 +1,7 @@
 import React from "react";
 import Background from "./ui/background";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import About from "./About";
 import Link from "next/link";
-const { isAuthenticated } = getKindeServerSession();
 const Home: React.FC = async () => {
   return (
     <div>
@@ -23,19 +21,11 @@ const Home: React.FC = async () => {
             </h1>
           </div>
           <div>
-            {(await isAuthenticated()) ? (
               <Link href="/select">
                 <button className="px-12 py-4 rounded-full bg-[#ac99f1] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#967ce1] transition-transform duration-200">
                   Start Now
                 </button>
               </Link>
-            ) : (
-              <Link href="/api/auth/login">
-                <button className="px-12 py-4 rounded-full bg-[#ac99f1] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#967ce1] transition-transform duration-200">
-                  Start Now
-                </button>
-              </Link>
-            )}
           </div>
         </div>
       </div>
