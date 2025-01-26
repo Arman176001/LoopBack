@@ -35,7 +35,6 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Navbar from "@/components/Navbar";
-import Image from "next/image";
 
 const saira = Saira_Stencil_One({ weight: "400", subsets: ["latin"] });
 
