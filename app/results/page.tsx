@@ -34,7 +34,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar"; 
 
 const saira = Saira_Stencil_One({ weight: "400", subsets: ["latin"] });
 
